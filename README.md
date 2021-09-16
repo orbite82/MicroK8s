@@ -7,20 +7,19 @@ Estudos e Poc Micro k8s - https://microk8s.io/
   *[Link](https://snapcraft.io/docs/installing-snap-on-linux-mint)
 
   ```
-  ┌─[orbite]@[Navita]:~/MicroK8s
-  └──> $ sudo rm /etc/apt/preferences.d/nosnap.pref
-
-  ┌─[orbite]@[Navita]:~/MicroK8s
-  └──> $ sudo apt update
-
-  ┌─[orbite]@[Navita]:~/MicroK8s
-  └──> $ sudo apt install snapd
+   sudo rm /etc/apt/preferences.d/nosnap.pref
 
   ```
+  ```
+   sudo apt update
 
   ```
-  ┌─[orbite]@[Navita]:~/MicroK8s
-  └──> $ sudo snap install microk8s --classic
+  ```
+   sudo apt install snapd
+
+  ```
+  ```
+  sudo snap install microk8s --classic
 
   ```
 
