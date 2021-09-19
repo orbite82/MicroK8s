@@ -109,22 +109,5 @@ demo   1/1     Running   0          6m6s
 └──> $ microk8s kubectl delete pod demo
 pod "demo" deleted
 
-┌─[orbite]@[Navita]:~/MicroK8s
-└──> $ git add .
-warning: adding embedded git repository: demo
-hint: You've added another git repository inside your current repository.
-hint: Clones of the outer repository will not contain the contents of
-hint: the embedded repository and will not know how to obtain it.
-hint: If you meant to add a submodule, use:
-hint: 
-hint:   git submodule add <url> demo
-hint: 
-hint: If you added this path by mistake, you can remove it from the
-hint: index with:
-hint: 
-hint:   git rm --cached demo
-hint: 
-hint: See "git help submodule" for more information.
-
-
-
+# Estudar comando
+microk8s kubectl get pods --selector app=demo
