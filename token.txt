@@ -1,0 +1,5 @@
+┌─[orbite]@[Navita]:~/MicroK8s
+└──> $ microk8s dashboard-proxy
+Checking if Dashboard is running.
+Dashboard will be available at https://127.0.0.1:10443
+Use the following token to login:

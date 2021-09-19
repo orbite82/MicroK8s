@@ -5,7 +5,7 @@ Estudos e Poc Micro k8s - https://microk8s.io/
 
   * Link de referencia Installing snap on Linux Mint:
 
-   [Link](https://snapcraft.io/docs/installing-snap-on-linux-mint)
+   *[Link](https://snapcraft.io/docs/installing-snap-on-linux-mint)
 
   ```
    sudo rm /etc/apt/preferences.d/nosnap.pref
@@ -141,7 +141,7 @@ Estudos e Poc Micro k8s - https://microk8s.io/
     container-registry   service/registry                    NodePort       10.152.183.39    <none>        5000:32000/TCP                                                                                                                               91s
     istio-system         service/istio-galley                ClusterIP      10.152.183.126   <none>        443/TCP,15014/TCP,9901/TCP                                                                                                                   21s
     istio-system         service/istio-egressgateway         ClusterIP      10.152.183.168   <none>        80/TCP,443/TCP,15443/TCP                                                                                                                     21s
-    istio-system         service/istio-ingressgateway        LoadBalancer   10.152.183.171   <pending>       15020:31399/TCP,80:31380/TCP,443:31390/TCP,31400:31400/TCP,15029:31712/TCP,15030:30545/TCP,15031:32574/TCP,15032:30073/TCP,15443:31063/TCP   21s
+    istio-system         service/istio-ingressgateway        LoadBalancer   10.152.183.171   <pending>     15020:31399/TCP,80:31380/TCP,443:31390/TCP,31400:31400/TCP,15029:31712/TCP,15030:30545/TCP,15031:32574/TCP,15032:30073/TCP,15443:31063/TCP   21s
     istio-system         service/grafana                     ClusterIP      10.152.183.20    <none>        3000/TCP                                                                                                                                     21s
     istio-system         service/kiali                       ClusterIP      10.152.183.127   <none>        20001/TCP                                                                                                                                    21s
     istio-system         service/istio-policy                ClusterIP      10.152.183.60    <none>        9091/TCP,15004/TCP,15014/TCP                                                                                                                 21s
@@ -208,8 +208,8 @@ Estudos e Poc Micro k8s - https://microk8s.io/
 
   ```
 * If you mainly use MicroK8s you can make our kubectl the default one on your command-line with alias mkctl="microk8s kubectl". Since it is a standard upstream kubectl, you can also drive other Kubernetes clusters with it by pointing to the respective kubeconfig file via the --kubeconfig argument.
- 
- * __Access the Kubernetes dashboard__
+
+* __Access the Kubernetes dashboard__
 
   ```
    microk8s dashboard-proxy
