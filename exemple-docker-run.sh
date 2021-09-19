@@ -111,3 +111,13 @@ pod "demo" deleted
 
 # Estudar comando
 microk8s kubectl get pods --selector app=demo
+
+#LINK --> https://kubernetes.io/pt-br/docs/reference/kubectl/cheatsheet/
+
+# Obtenha a versão da label de todos os pods com a label app=cassandra
+kubectl get pods --selector=app=cassandra -o \
+  jsonpath='{.items[*].metadata.labels.version}'
+
+# Obter todos os nós workers (use um seletor para excluir resultados que possuem uma label
+# nomeado 'node-role.kubernetes.io/master')
+kubectl get node --selector='!node-role.kubernetes.io/master'
