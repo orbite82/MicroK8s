@@ -113,6 +113,7 @@ pod "demo" deleted
 microk8s kubectl get pods --selector app=demo
 
 #LINK --> https://kubernetes.io/pt-br/docs/reference/kubectl/cheatsheet/
+# --> https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 
 # Obtenha a versão da label de todos os pods com a label app=cassandra
 kubectl get pods --selector=app=cassandra -o \
