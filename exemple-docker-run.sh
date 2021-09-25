@@ -122,3 +122,171 @@ kubectl get pods --selector=app=cassandra -o \
 # Obter todos os nós workers (use um seletor para excluir resultados que possuem uma label
 # nomeado 'node-role.kubernetes.io/master')
 kubectl get node --selector='!node-role.kubernetes.io/master'
+
+# Habilitando o DNS no MicroK8s
+
+# Link: https://microk8s.io/docs/addon-dns
+
+┌─[orbite]@[Navita]:~
+└──> $ microk8s enable dns
+Addon dns is already enabled.
+
+microk8s kubectl -n kube-system edit configmap/coredns
+
+# Desativar
+microk8s disable dns
+
+# Instalando Golang no Linux
+https://golang.org/doc/install
+
+root@orbite:~#
+
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+go version
+
+# Estado de um cluster
+
+microk8s kubectl cluster-info
+Kubernetes control plane is running at https://127.0.0.1:16443
+Metrics-server is running at https://127.0.0.1:16443/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
+CoreDNS is running at https://127.0.0.1:16443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+# Listar os nodes de um cluster
+
+microk8s kubectl get nodes -o wide
+NAME     STATUS   ROLES    AGE   VERSION                    INTERNAL-IP     EXTERNAL-IP   OS-IMAGE          KERNEL-VERSION      CONTAINER-RUNTIME
+navita   Ready    <none>   9d    v1.21.5-3+e8b6c7dca47a08   192.168.1.104   <none>        Linux Mint 20.1   5.11.0-36-generic   containerd://1.4.4
+
+# Listar os podes de um cluster
+
+microk8s kubectl get pods -o wide
+No resources found in default namespace.
+
+microk8s kubectl get pods -n traefik -o wide
+NAME                               READY   STATUS    RESTARTS   AGE     IP              NODE     NOMINATED NODE   READINESS GATES
+traefik-ingress-controller-6sgbk   1/1     Running   0          8m26s   192.168.1.104   navita   <none>           <none>
+
+# Pegar informações sobre os serviços de um cluster
+
+microk8s kubectl get services
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   9d
+
+# Detalhes da configuração de um serviço
+
+microk8s kubectl get service kubernetes -o json
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+        "creationTimestamp": "2021-09-16T20:59:12Z",
+        "labels": {
+            "component": "apiserver",
+            "provider": "kubernetes"
+        },
+        "name": "kubernetes",
+        "namespace": "default",
+        "resourceVersion": "99",
+        "selfLink": "/api/v1/namespaces/default/services/kubernetes",
+        "uid": "ee2ce8bc-9e0e-4b05-8b06-d2dba00277df"
+    },
+    "spec": {
+        "clusterIP": "10.152.183.1",
+        "clusterIPs": [
+            "10.152.183.1"
+        ],
+        "ipFamilies": [
+            "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+            {
+                "name": "https",
+                "port": 443,
+                "protocol": "TCP",
+                "targetPort": 16443
+            }
+        ],
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+    },
+    "status": {
+        "loadBalancer": {}
+    }
+}
+
+# Listar o IP de um Pod
+
+microk8s kubectl describe pods traefik-ingress-controller -n traefik
+Name:         traefik-ingress-controller-6sgbk
+Namespace:    traefik
+Priority:     0
+Node:         navita/192.168.1.104
+Start Time:   Sat, 25 Sep 2021 20:25:04 -0300
+Labels:       controller-revision-hash=6d69bc6757
+              k8s-app=traefik-ingress-lb
+              name=traefik-ingress-lb
+              pod-template-generation=1
+Annotations:  <none>
+Status:       Running
+IP:           192.168.1.104
+IPs:
+  IP:           192.168.1.104
+Controlled By:  DaemonSet/traefik-ingress-controller
+Containers:
+  traefik-ingress-lb:
+    Container ID:  containerd://620833afc9563b2261aa9e4a62a14f051675fbb09ec34fe21c577ce4db1a5a0a
+    Image:         traefik:2.3
+    Image ID:      docker.io/library/traefik@sha256:0181e35c5af98f7f30fb391f91a6dbd281a90d7cf971e9909e26afd4ea923251
+    Port:          8080/TCP
+    Host Port:     8080/TCP
+    Args:
+      --providers.kubernetesingress=true
+      --providers.kubernetesingress.ingressendpoint.ip=127.0.0.1
+      --log=true
+      --log.level=INFO
+      --accesslog=true
+      --accesslog.filepath=/dev/stdout
+      --accesslog.format=json
+      --entrypoints.web.address=:8080
+      --entrypoints.websecure.address=:8443
+    State:          Running
+      Started:      Sat, 25 Sep 2021 20:25:04 -0300
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-ghsdj (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-ghsdj:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 :NoSchedule op=Exists
+                             node.kubernetes.io/disk-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/memory-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/network-unavailable:NoSchedule op=Exists
+                             node.kubernetes.io/not-ready:NoExecute op=Exists
+                             node.kubernetes.io/pid-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/unreachable:NoExecute op=Exists
+                             node.kubernetes.io/unschedulable:NoSchedule op=Exists
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  18m   default-scheduler  Successfully assigned traefik/traefik-ingress-controller-6sgbk to navita
+  Normal  Pulled     18m   kubelet            Container image "traefik:2.3" already present on machine
+  Normal  Created    18m   kubelet            Created container traefik-ingress-lb
+  Normal  Started    18m   kubelet            Started container traefik-ingress-lb
