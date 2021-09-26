@@ -290,3 +290,44 @@ Events:
   Normal  Pulled     18m   kubelet            Container image "traefik:2.3" already present on machine
   Normal  Created    18m   kubelet            Created container traefik-ingress-lb
   Normal  Started    18m   kubelet            Started container traefik-ingress-lb
+
+# Ver NameSpace e Pods
+
+microk8s kubectl get pods -A -o wide
+NAMESPACE            NAME                                         READY   STATUS      RESTARTS   AGE   IP              NODE     NOMINATED NODE   READINESS GATES
+istio-system         istio-grafana-post-install-1.5.1-5gcnx       0/1     Completed   0          9d    10.1.41.136     navita   <none>           <none>
+istio-system         istio-security-post-install-1.5.1-x4zjm      0/1     Completed   0          9d    10.1.41.137     navita   <none>           <none>
+kube-system          hostpath-provisioner-5c65fbdb4f-fv8ts        1/1     Running     16         9d    10.1.41.171     navita   <none>           <none>
+kube-system          dashboard-metrics-scraper-78d7698477-tqxl4   1/1     Running     16         9d    10.1.41.168     navita   <none>           <none>
+kube-system          coredns-7f9c69c78c-65kg7                     1/1     Running     16         9d    10.1.41.149     navita   <none>           <none>
+kube-system          kubernetes-dashboard-85fd7f45cb-4sdvf        1/1     Running     16         9d    10.1.41.154     navita   <none>           <none>
+kube-system          calico-kube-controllers-f7868dd95-57j8h      1/1     Running     17         9d    10.1.41.135     navita   <none>           <none>
+istio-system         istio-sidecar-injector-69f7fcc574-n6s9d      1/1     Running     16         9d    10.1.41.169     navita   <none>           <none>
+istio-system         istio-citadel-67658cf6c-dvd4k                1/1     Running     16         9d    10.1.41.146     navita   <none>           <none>
+kube-system          metrics-server-8bbfb4bdb-5ftk8               1/1     Running     16         9d    10.1.41.170     navita   <none>           <none>
+istio-system         prometheus-95dd89f5b-27h2k                   1/1     Running     16         9d    10.1.41.156     navita   <none>           <none>
+istio-system         grafana-74488d57b4-vxrfm                     1/1     Running     16         9d    10.1.41.183     navita   <none>           <none>
+istio-system         istio-galley-6fb8c7b586-dt4pf                1/1     Running     16         9d    10.1.41.182     navita   <none>           <none>
+kube-system          calico-node-nxd72                            1/1     Running     17         9d    192.168.1.104   navita   <none>           <none>
+container-registry   registry-9b57d9df8-q6b96                     1/1     Running     16         9d    10.1.41.145     navita   <none>           <none>
+istio-system         kiali-75b58b6fd8-r8w8p                       1/1     Running     16         9d    10.1.41.133     navita   <none>           <none>
+istio-system         istio-pilot-6976cdf765-8cjl6                 2/2     Running     33         9d    10.1.41.150     navita   <none>           <none>
+istio-system         istio-telemetry-6f4556487d-m29zh             2/2     Running     68         9d    10.1.41.163     navita   <none>           <none>
+istio-system         istio-tracing-c69cb5cf5-shsz2                1/1     Running     31         9d    10.1.41.140     navita   <none>           <none>
+istio-system         istio-policy-56698c6987-bnsdv                2/2     Running     69         9d    10.1.41.153     navita   <none>           <none>
+istio-system         istio-egressgateway-674898c6-rhj5z           1/1     Running     16         9d    10.1.41.147     navita   <none>           <none>
+istio-system         istio-ingressgateway-5ff49854cc-sxjvl        1/1     Running     16         9d    10.1.41.175     navita   <none>           <none>
+ingress              nginx-ingress-microk8s-controller-gpnf8      1/1     Running     0          36m   10.1.41.176     navita   <none>           <none>
+traefik              traefik-ingress-controller-6sgbk             1/1     Running     0          29m   192.168.1.104   navita   <none>           <none>
+
+# Ver Labels
+
+microk8s kubectl get nodes --show-labels
+NAME     STATUS   ROLES    AGE   VERSION                    LABELS
+navita   Ready    <none>   9d    v1.21.5-3+e8b6c7dca47a08   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=navita,kubernetes.io/os=linux,microk8s.io/cluster=true
+
+# Verificar o pod rodando
+
+microk8s kubectl get pods -n traefik --output=wide
+NAME                               READY   STATUS    RESTARTS   AGE   IP              NODE     NOMINATED NODE   READINESS GATES
+traefik-ingress-controller-6sgbk   1/1     Running   0          37m   192.168.1.104   navita   <none>           <none>
