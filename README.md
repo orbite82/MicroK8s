@@ -216,21 +216,22 @@ Estudos e Poc Micro k8s - https://microk8s.io/
 
   ``` 
   ```
-    ┌─[orbite]@[Navita]:~/MicroK8s
-    └──> $ microk8s dashboard-proxy
+    microk8s dashboard-proxy
     Checking if Dashboard is running.
     Dashboard will be available at https://127.0.0.1:10443
     Use the following token to login:
 
   ```
-  microk8s kubectl get services
-  NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-  kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   36m
+  ```
+    microk8s kubectl get services
+    NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+    kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   36m
 
-  microk8s kubectl get nodes
-  NAME     STATUS   ROLES    AGE   VERSION
-  navita   Ready    <none>   36m   v1.21.4-3+e5758f73ed2a04
+    microk8s kubectl get nodes
+    NAME     STATUS   ROLES    AGE   VERSION
+    navita   Ready    <none>   36m   v1.21.4-3+e5758f73ed2a04
 
-  microk8s kubectl get pods
-  No resources found in default namespace.
- ```
+    microk8s kubectl get pods
+    No resources found in default namespace.
+ 
+  ```
